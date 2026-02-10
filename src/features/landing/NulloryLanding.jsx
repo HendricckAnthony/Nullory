@@ -422,6 +422,30 @@ export default function NulloryLanding() {
                     </motion.span>
                   ))}
                 </Box>
+                <motion.div variants={fadeInUp} custom={1.5}>
+                  <Typography
+                    component="p"
+                    sx={{
+                      fontSize: { xs: 20, md: 26 },
+                      fontWeight: 800,
+                      letterSpacing: "0.03em",
+                      mb: 1.5,
+                      ...(!reducedMotion && {
+                        background: isDark
+                          ? "linear-gradient(90deg, #fff 0%, #00B3FF 35%, #8B5CF6 65%, #00B3FF 100%)"
+                          : "linear-gradient(90deg, #0F172A 0%, #0284C7 35%, #7C3AED 65%, #0284C7 100%)",
+                        backgroundSize: "200% auto",
+                        WebkitBackgroundClip: "text",
+                        backgroundClip: "text",
+                        color: "transparent",
+                        animation: "gradientShine 5s ease-in-out infinite",
+                      }),
+                      ...(reducedMotion && { color: "primary.main" }),
+                    }}
+                  >
+                    Partimos do zero. Entregamos valor.
+                  </Typography>
+                </motion.div>
                 <motion.div variants={fadeInUp} custom={2}>
                   <Typography sx={{ color: "text.secondary", fontSize: { xs: 16, md: 18 } }}>
                     Tiramos sua ideia do papel em dias, não meses. MVP Ágil para validar rápido e
