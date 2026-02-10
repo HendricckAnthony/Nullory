@@ -36,6 +36,10 @@ import BoltIcon from "@mui/icons-material/Bolt";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import IconButton from "@mui/material/IconButton";
+import { useThemeMode, THEME_MODES } from "@/app/providers";
 import logoWhite from "@/shared/assets/logo-white.png";
 
 const HERO_TITLE_WORDS = "Software sob medida com foco em resultado".split(" ");
@@ -174,10 +178,18 @@ function PortfolioCard({ title, desc, chips = [], index = 0 }) {
 }
 
 export default function NulloryLanding() {
+  const { mode, setMode } = useThemeMode();
   const reducedMotion = useReducedMotion();
   const { scrollYProgress, scrollY } = useScroll();
   const [navScrolled, setNavScrolled] = useState(false);
-  const navBg = useTransform(scrollY, [0, 80], ["rgba(5, 7, 13, 0.85)", "rgba(5, 7, 13, 0.97)"]);
+  const isDark = mode === THEME_MODES.DARK;
+  const navBg = useTransform(
+    scrollY,
+    [0, 80],
+    isDark
+      ? ["rgba(5, 7, 13, 0.85)", "rgba(5, 7, 13, 0.97)"]
+      : ["rgba(212, 220, 230, 0.92)", "rgba(212, 220, 230, 0.98)"]
+  );
   const navShadow = useTransform(
     scrollY,
     [0, 80],
@@ -207,7 +219,52 @@ export default function NulloryLanding() {
   ];
 
   return (
-    <Box component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : 0.6 }}>
+    <Box component={motion.div} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: reducedMotion ? 0 : 0.6 }} sx={{ position: "relative", minHeight: "100%" }}>
+      {/* Fundo com gradiente + orbs em toda a tela */}
+      <Box
+        sx={{
+          position: "fixed",
+          inset: 0,
+          zIndex: -1,
+          background: (theme) =>
+            theme.palette.gradient?.hero ??
+            (isDark
+              ? "linear-gradient(180deg, rgba(17, 24, 39, 0.92) 0%, rgba(5, 7, 13, 1) 50%)"
+              : "linear-gradient(180deg, #F8FAFC 0%, #F1F5F9 100%)"),
+          "@keyframes floatOrb": {
+            "0%, 100%": { transform: "translate(0, 0) scale(1)", opacity: 0.6 },
+            "50%": { transform: "translate(15px, -20px) scale(1.1)", opacity: 0.9 },
+          },
+          "@keyframes floatOrb2": {
+            "0%, 100%": { transform: "translate(0, 0) scale(1)", opacity: 0.5 },
+            "50%": { transform: "translate(-10px, 15px) scale(1.05)", opacity: 0.8 },
+          },
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            top: "-50%",
+            right: "-20%",
+            width: "70%",
+            height: "140%",
+            background:
+              "radial-gradient(ellipse at center, rgba(124, 58, 237, 0.12) 0%, rgba(0, 179, 255, 0.06) 50%, transparent 70%)",
+            pointerEvents: "none",
+            animation: "floatOrb 12s ease-in-out infinite",
+          },
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            bottom: "-30%",
+            left: "-20%",
+            width: "60%",
+            height: "100%",
+            background:
+              "radial-gradient(ellipse at center, rgba(0, 179, 255, 0.08) 0%, rgba(139, 92, 246, 0.1) 40%, transparent 60%)",
+            pointerEvents: "none",
+            animation: "floatOrb2 14s ease-in-out infinite",
+          },
+        }}
+      />
       {!reducedMotion && (
         <motion.div
           style={{
@@ -235,7 +292,7 @@ export default function NulloryLanding() {
         }}
         sx={{
           borderBottom: 1,
-          borderColor: navScrolled ? "rgba(255,255,255,0.06)" : "divider",
+          borderColor: "divider",
           backdropFilter: "saturate(180%) blur(12px)",
         }}
       >
@@ -250,8 +307,11 @@ export default function NulloryLanding() {
               textDecoration: "none",
               "& .logo-neon": {
                 height: 48,
-                filter: "drop-shadow(0 0 4px rgba(0, 179, 255, 0.3)) drop-shadow(0 0 8px rgba(139, 92, 246, 0.2))",
-                ...(!reducedMotion && {
+                ...(isDark && {
+                  filter: "drop-shadow(0 0 4px rgba(0, 179, 255, 0.3)) drop-shadow(0 0 8px rgba(139, 92, 246, 0.2))",
+                }),
+                ...(!isDark && { filter: "brightness(0) opacity(0.85)" }),
+                ...(!reducedMotion && isDark && {
                   animation: "logoNeon 3s ease-in-out infinite",
                 }),
               },
@@ -267,6 +327,14 @@ export default function NulloryLanding() {
           >
             <Box component="img" src={logoWhite} alt="Nullory" className="logo-neon" />
           </Box>
+          <IconButton
+            onClick={() => setMode(isDark ? THEME_MODES.LIGHT : THEME_MODES.DARK)}
+            color="inherit"
+            aria-label={isDark ? "Tema claro" : "Tema escuro"}
+            sx={{ mr: 1 }}
+          >
+            {isDark ? <LightModeIcon /> : <DarkModeIcon />}
+          </IconButton>
           <Stack direction="row" spacing={{ xs: 1, md: 2 }} sx={{ display: { xs: "none", md: "flex" } }}>
             <Button href="#portfolio" color="inherit" component={motion.a} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>Portfólio</Button>
             <Button href="#services" color="inherit" component={motion.a} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>Serviços</Button>
@@ -286,56 +354,10 @@ export default function NulloryLanding() {
         transition={{ duration: 0.6 }}
         sx={{
           py: { xs: 6, md: 10 },
-          background: "linear-gradient(180deg, rgba(17, 24, 39, 0.92) 0%, rgba(5, 7, 13, 1) 50%)",
           position: "relative",
           overflow: "hidden",
-          "@keyframes floatOrb": {
-            "0%, 100%": { transform: "translate(0, 0) scale(1)", opacity: 0.6 },
-            "50%": { transform: "translate(15px, -20px) scale(1.1)", opacity: 0.9 },
-          },
-          "@keyframes floatOrb2": {
-            "0%, 100%": { transform: "translate(0, 0) scale(1)", opacity: 0.5 },
-            "50%": { transform: "translate(-10px, 15px) scale(1.05)", opacity: 0.8 },
-          },
-          "&::before": {
-            content: '""',
-            position: "absolute",
-            top: "-50%",
-            right: "-20%",
-            width: "70%",
-            height: "140%",
-            background: "radial-gradient(ellipse at center, rgba(124, 58, 237, 0.12) 0%, rgba(0, 179, 255, 0.06) 50%, transparent 70%)",
-            pointerEvents: "none",
-            animation: "floatOrb 12s ease-in-out infinite",
-          },
-          "&::after": {
-            content: '""',
-            position: "absolute",
-            bottom: "-30%",
-            left: "-20%",
-            width: "60%",
-            height: "100%",
-            background: "radial-gradient(ellipse at center, rgba(0, 179, 255, 0.08) 0%, rgba(139, 92, 246, 0.1) 40%, transparent 60%)",
-            pointerEvents: "none",
-            animation: "floatOrb2 14s ease-in-out infinite",
-          },
         }}
       >
-        {!reducedMotion && (
-          <Box
-            sx={{
-              position: "absolute",
-              inset: 0,
-              backgroundImage: `
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px)
-              `,
-              backgroundSize: "48px 48px",
-              pointerEvents: "none",
-              zIndex: 0,
-            }}
-          />
-        )}
         {!reducedMotion && (
           <motion.div
             style={{
@@ -373,7 +395,9 @@ export default function NulloryLanding() {
                       display: "inline-block",
                       marginRight: "0.2em",
                       ...(!reducedMotion && {
-                        background: "linear-gradient(90deg, #fff 0%, #00B3FF 22%, #8B5CF6 48%, #00B3FF 74%, #fff 100%)",
+                        background: isDark
+                          ? "linear-gradient(90deg, #fff 0%, #00B3FF 22%, #8B5CF6 48%, #00B3FF 74%, #fff 100%)"
+                          : "linear-gradient(90deg, #0F172A 0%, #0284C7 22%, #7C3AED 48%, #0284C7 74%, #0F172A 100%)",
                         backgroundSize: "200% auto",
                         WebkitBackgroundClip: "text",
                         backgroundClip: "text",
