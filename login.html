@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — Futurista & Chamativa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --azul-royal: #1D4ED8;
+      --roxo-vibrante: #6D28D9;
+      --azul-tech: #2563EB;
+      --roxo-eletrico: #7C3AED;
+      --roxo-neon: #A855F7;
+      --azul-neon: #00B3FF;
+      --magenta-tech: #C026D3;
+      --preto: #05070D;
+      --cinza-frio: #111827;
+      --branco: #FFFFFF;
+    }
+
+    body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+      min-height: 100vh;
+      background: var(--preto);
+      color: var(--branco);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Background decorativo */
+    body::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 70%;
+      height: 140%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(168, 85, 247, 0.2) 0%,
+        rgba(124, 58, 237, 0.12) 30%,
+        rgba(0, 179, 255, 0.06) 50%,
+        transparent 70%
+      );
+      pointer-events: none;
+    }
+
+    body::after {
+      content: '';
+      position: absolute;
+      bottom: -30%;
+      left: -20%;
+      width: 60%;
+      height: 100%;
+      background: radial-gradient(
+        ellipse at center,
+        rgba(0, 179, 255, 0.12) 0%,
+        rgba(192, 38, 211, 0.08) 30%,
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+
+    .login-container {
+      width: 100%;
+      max-width: 420px;
+      background: var(--cinza-frio);
+      border-radius: 16px;
+      padding: 48px 40px;
+      box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.7),
+        0 0 0 1px rgba(0, 179, 255, 0.08);
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #2563EB, #7C3AED, #A855F7);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 20px;
+    }
+
+    .logo-text {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--azul-neon);
+      opacity: 0.95;
+      font-size: 0.95rem;
+      margin-bottom: 32px;
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--branco);
+      margin-bottom: 8px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      background: var(--preto);
+      border: 1px solid var(--cinza-frio);
+      border-radius: 10px;
+      color: var(--branco);
+      font-size: 1rem;
+      font-family: inherit;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input::placeholder {
+      color: var(--cinza-frio);
+    }
+
+    input:focus {
+      outline: none;
+      border-color: var(--azul-neon);
+      box-shadow: 0 0 0 3px rgba(0, 179, 255, 0.25);
+    }
+
+    .options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.875rem;
+      color: var(--azul-neon);
+      opacity: 0.95;
+    }
+
+    .remember input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--magenta-tech);
+    }
+
+    .forgot {
+      font-size: 0.875rem;
+      color: var(--azul-neon);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+
+    .forgot:hover {
+      color: var(--magenta-tech);
+    }
+
+    .btn-login {
+      width: 100%;
+      padding: 16px 24px;
+      background: linear-gradient(135deg, #2563EB, #7C3AED, #A855F7);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 1rem;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-login:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 35px -5px rgba(168, 85, 247, 0.5), 0 0 0 1px rgba(0, 179, 255, 0.3);
+    }
+
+    .btn-login:active {
+      transform: translateY(0);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 28px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--cinza-frio);
+      opacity: 0.6;
+    }
+
+    .divider span {
+      font-size: 0.8rem;
+      color: var(--azul-neon);
+      opacity: 0.9;
+    }
+
+    .sso-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-sso {
+      flex: 1;
+      padding: 14px 16px;
+      background: var(--preto);
+      border: 1px solid var(--cinza-frio);
+      border-radius: 10px;
+      color: var(--branco);
+      font-size: 0.9rem;
+      font-family: inherit;
+      cursor: pointer;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .btn-sso:hover {
+      border-color: var(--magenta-tech);
+      background: rgba(192, 38, 211, 0.1);
+    }
+
+    .footer-text {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 0.875rem;
+      color: var(--azul-neon);
+      opacity: 0.95;
+    }
+
+    .footer-text a {
+      color: var(--magenta-tech);
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .footer-text a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <div class="logo">
+      <div class="logo-icon">N</div>
+      <span class="logo-text">Nullory</span>
+    </div>
+
+    <h1>Entre na sua conta</h1>
+    <p class="subtitle">Acesso seguro à sua infraestrutura</p>
+
+    <form>
+      <div class="form-group">
+        <label for="email">E-mail</label>
+        <input type="email" id="email" placeholder="seu@email.com" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" placeholder="••••••••" required>
+      </div>
+
+      <div class="options">
+        <label class="remember">
+          <input type="checkbox" checked>
+          Lembrar de mim
+        </label>
+        <a href="#" class="forgot">Esqueceu a senha?</a>
+      </div>
+
+      <button type="submit" class="btn-login">Entrar</button>
+
+      <div class="divider">
+        <span>ou continue com</span>
+      </div>
+
+      <div class="sso-buttons">
+        <button type="button" class="btn-sso">SSO</button>
+        <button type="button" class="btn-sso">Google</button>
+      </div>
+    </form>
+
+    <p class="footer-text">
+      Não tem conta? <a href="#">Solicitar acesso</a>
+    </p>
+  </div>
+</body>
+</html>
