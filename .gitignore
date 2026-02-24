@@ -24,6 +24,12 @@ pnpm-debug.log*
 .parcel-cache/
 .vite/
 *.tsbuildinfo
+.turbo
+
+# Testes / Coverage
+coverage/
+*.lcov
+.nyc_output/
 
 # IDE / Editor
 .idea/
@@ -38,11 +44,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# Testes / Coverage
-coverage/
-*.lcov
-.nyc_output/
+# Docker
+.docker/
 
-# Outros
+# Segurança
 *.pem
-.turbo
