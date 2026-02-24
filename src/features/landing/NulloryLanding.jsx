@@ -861,7 +861,13 @@ export default function NulloryLanding() {
             </Grid>
 
             <Grid item xs={12} md={7}>
-              <Grid container spacing={{ xs: 1.5, md: 2 }} component="form" onSubmit={(e) => e.preventDefault()}>
+              <Grid container spacing={{ xs: 1.5, md: 2 }} component="form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  if (typeof window.gtag_report_conversion === 'function') {
+                    window.gtag_report_conversion();
+                  }
+                }}>
                 <Grid item xs={12}>
                   <TextField fullWidth label="Nome" placeholder="Seu nome" />
                 </Grid>
