@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useMemo } from "react";
+import React, { createContext, useContext, useState, useMemo, useEffect } from "react";
 import { ThemeProvider as MuiThemeProvider } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import { getTheme, THEME_MODES } from "@/core/theme";
@@ -31,6 +31,13 @@ export function ThemeModeProvider({ children }) {
 
   const theme = useMemo(() => getTheme(mode), [mode]);
   const contextValue = useMemo(() => ({ mode, setMode }), [mode]);
+
+  useEffect(() => {
+    const link = document.querySelector('link[rel="icon"]');
+    if (link) {
+      link.href = mode === THEME_MODES.LIGHT ? "favicon.png" : "favicon_dark.png";
+    }
+  }, [mode]);
 
   return (
     <ThemeModeContext.Provider value={contextValue}>

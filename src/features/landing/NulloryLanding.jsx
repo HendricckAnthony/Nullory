@@ -18,11 +18,9 @@ import {
   List,
   ListItem,
   ListItemIcon,
-  ListItemText,
-  TextField
+  ListItemText
 } from "@mui/material";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import EmailIcon from "@mui/icons-material/Email";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TimelineIcon from "@mui/icons-material/Timeline";
@@ -31,7 +29,6 @@ import GroupsIcon from "@mui/icons-material/Groups";
 import LeaderboardIcon from "@mui/icons-material/Leaderboard";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
-import LinkIcon from "@mui/icons-material/Link";
 import BoltIcon from "@mui/icons-material/Bolt";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
@@ -40,9 +37,20 @@ import DarkModeIcon from "@mui/icons-material/DarkMode";
 import LightModeIcon from "@mui/icons-material/LightMode";
 import IconButton from "@mui/material/IconButton";
 import { useThemeMode, THEME_MODES } from "@/app/providers";
+import { reportConversion } from "@/shared/utils/gtagConversion";
 import logoWhite from "@/shared/assets/logo-white.png";
 
 const HERO_TITLE_WORDS = "Software sob medida com foco em resultado".split(" ");
+const WHATSAPP = {
+  number: "+55 11 97961-8229",
+  link: "https://wa.me/5511979618229",
+  message: "Olá! Acessei o site da Nullory e gostaria de tirar minha ideia do papel. Pode me contar como funciona?",
+  messageMVP: "Olá! Tenho interesse no MVP Ágil para validar minha ideia rápido. Pode me contar como funciona?",
+  messageProposta:
+    "Olá! Gostaria de solicitar uma proposta para desenvolvimento completo do meu projeto. Pode me retornar?",
+  messageProjetoCompleto:
+    "Olá! Gostaria de saber mais sobre o desenvolvimento completo de projeto. Pode me retornar?",
+};
 
 const fadeInUp = {
   hidden: { opacity: 0, y: 24 },
@@ -339,7 +347,17 @@ export default function NulloryLanding() {
             <Button href="#portfolio" color="inherit" component={motion.a} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>Portfólio</Button>
             <Button href="#services" color="inherit" component={motion.a} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>Serviços</Button>
             <Button href="#agile-mvp" color="inherit" component={motion.a} whileHover={{ y: -1 }} whileTap={{ scale: 0.98 }}>MVP Ágil</Button>
-            <Button href="#contact" variant="contained" endIcon={<ArrowForwardIcon />} component={motion.a} whileHover={{ scale: 1.03, boxShadow: "0 12px 40px -8px rgba(124, 58, 237, 0.5)", transition: { duration: 0.05 } }} whileTap={{ scale: 0.98 }}>
+            <Button
+              href={`${WHATSAPP.link}?text=${encodeURIComponent(WHATSAPP.message)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="contained"
+              endIcon={<ArrowForwardIcon />}
+              component={motion.a}
+              whileHover={{ scale: 1.03, boxShadow: "0 12px 40px -8px rgba(124, 58, 237, 0.5)", transition: { duration: 0.05 } }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => reportConversion()}
+            >
               Fale com a gente
             </Button>
           </Stack>
@@ -454,10 +472,32 @@ export default function NulloryLanding() {
                 </motion.div>
                 <motion.div variants={fadeInUp} custom={3}>
                   <Stack direction={{ xs: "column", sm: "row" }} spacing={2} sx={{ mt: 1 }}>
-                    <Button href="#agile-mvp" size="large" variant="contained" endIcon={<ArrowForwardIcon />} component={motion.a} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                    <Button
+                      href={`${WHATSAPP.link}?text=${encodeURIComponent(WHATSAPP.messageMVP)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      size="large"
+                      variant="contained"
+                      endIcon={<ArrowForwardIcon />}
+                      component={motion.a}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => reportConversion()}
+                    >
                       Quero um MVP Ágil
                     </Button>
-                    <Button href="#services" size="large" variant="outlined" endIcon={<ArrowForwardIcon />} component={motion.a} whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
+                    <Button
+                      href={`${WHATSAPP.link}?text=${encodeURIComponent(WHATSAPP.messageProjetoCompleto)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      size="large"
+                      variant="outlined"
+                      endIcon={<ArrowForwardIcon />}
+                      component={motion.a}
+                      whileHover={{ scale: 1.03 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => reportConversion()}
+                    >
                       Projeto completo
                     </Button>
                   </Stack>
@@ -606,9 +646,20 @@ export default function NulloryLanding() {
                 </List>
               </CardContent>
               <CardActions sx={{ p: 2 }}>
-                <Button fullWidth href="#agile-mvp" variant="contained" endIcon={<ArrowForwardIcon />} component={motion.a} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                  Quero meu MVP
-                </Button>
+                <Button
+                fullWidth
+                href={`${WHATSAPP.link}?text=${encodeURIComponent(WHATSAPP.messageMVP)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="contained"
+                endIcon={<ArrowForwardIcon />}
+                component={motion.a}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => reportConversion()}
+              >
+                Quero meu MVP
+              </Button>
               </CardActions>
             </Card>
           </Grid>
@@ -660,7 +711,18 @@ export default function NulloryLanding() {
                 </Grid>
               </CardContent>
               <CardActions sx={{ p: 2 }}>
-                <Button fullWidth href="#contact" variant="outlined" endIcon={<ArrowForwardIcon />} component={motion.a} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                <Button
+                  fullWidth
+                  href={`${WHATSAPP.link}?text=${encodeURIComponent(WHATSAPP.messageProposta)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  variant="outlined"
+                  endIcon={<ArrowForwardIcon />}
+                  component={motion.a}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => reportConversion()}
+                >
                   Solicitar proposta
                 </Button>
               </CardActions>
@@ -805,101 +867,78 @@ export default function NulloryLanding() {
       <Container maxWidth="lg" sx={{ py: { xs: 6, md: 10 } }}>
         <AnimatedSection reducedMotion={reducedMotion}>
           <Anchor id="contact" />
-          <SectionTitle
-            title="Vamos tirar sua ideia do papel?"
-            subtitle="Conte rapidamente sobre o seu projeto e receba uma avaliação de enquadramento (MVP x Completo)."
-            reducedMotion={reducedMotion}
-          />
-        <Paper
-          variant="outlined"
-          component={motion.div}
-          initial={reducedMotion ? false : { opacity: 0, y: 12 }}
-          whileInView={reducedMotion ? false : { opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.4 }}
-          sx={{
-            p: { xs: 2, md: 3 },
-            borderRadius: "4px",
-            "& .MuiOutlinedInput-root": {
-              transition: "box-shadow 0.3s ease, border-color 0.3s ease",
-              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
-                borderColor: "rgba(0, 179, 255, 0.6)",
-                boxShadow: "0 0 0 1px rgba(0, 179, 255, 0.2)",
-              },
-            },
-          }}
-        >
-          <Grid container spacing={{ xs: 2, md: 3 }}>
-            <Grid item xs={12} md={5}>
-              <Typography variant="subtitle1" fontWeight={700} gutterBottom>
-                Canais
+          <Box
+            component={motion.div}
+            initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+            whileInView={reducedMotion ? false : { opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            sx={{
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+              alignItems: { xs: "stretch", md: "center" },
+              gap: { xs: 2, md: 3 },
+              p: 3,
+              borderRadius: "4px",
+              background: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(0, 179, 255, 0.08) 100%)"
+                  : "linear-gradient(135deg, rgba(37, 99, 235, 0.08) 0%, rgba(139, 92, 246, 0.06) 100%)",
+              border: "1px solid",
+              borderColor: (theme) =>
+                theme.palette.mode === "dark" ? "rgba(139, 92, 246, 0.25)" : "rgba(124, 58, 237, 0.18)",
+              boxShadow: (theme) =>
+                theme.palette.mode === "dark"
+                  ? "0 8px 32px -8px rgba(0,0,0,0.3)"
+                  : "0 8px 32px -8px rgba(124, 58, 237, 0.12)",
+            }}
+          >
+            <Box sx={{ flex: "1 1 auto", minWidth: 0 }}>
+              <Typography sx={{ fontSize: { xs: 22, md: 26 }, fontWeight: 800, lineHeight: 1.2 }}>
+                Vamos tirar sua ideia do papel?
               </Typography>
-              <List>
-                <ListItem disableGutters>
-                  <ListItemIcon sx={{ minWidth: 28 }}>
-                    <EmailIcon color="secondary" />
-                  </ListItemIcon>
-                  <ListItemText primary="contato@nullory.software" secondary="E-mail" />
-                </ListItem>
-                <ListItem disableGutters>
-                  <ListItemIcon sx={{ minWidth: 28 }}>
-                    <WhatsAppIcon color="secondary" />
-                  </ListItemIcon>
-                  <ListItemText primary="+55 (00) 00000-0000" secondary="WhatsApp" />
-                </ListItem>
-                <ListItem disableGutters>
-                  <ListItemIcon sx={{ minWidth: 28 }}>
-                    <LinkIcon color="secondary" />
-                  </ListItemIcon>
-                  <ListItemText primary="nullory.software" secondary="Site" />
-                </ListItem>
-              </List>
-              <Typography variant="caption" color="text.secondary">
-                *Após a análise, se o esforço estimado superar 30 dias, sugerimos a reclassificação para projeto
-                completo.
+              <Typography variant="body1" color="text.secondary" sx={{ mt: 0.5 }}>
+                Fale com a gente pelo WhatsApp e conte sobre o seu projeto. Resposta rápida.
               </Typography>
-            </Grid>
-
-            <Grid item xs={12} md={7}>
-              <Grid container spacing={{ xs: 1.5, md: 2 }} component="form"
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (typeof window.gtag_report_conversion === 'function') {
-                    window.gtag_report_conversion();
-                  }
-                }}>
-                <Grid item xs={12}>
-                  <TextField fullWidth label="Nome" placeholder="Seu nome" />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField fullWidth label="E-mail" type="email" placeholder="voce@empresa.com" />
-                </Grid>
-                <Grid item xs={12} md={6}>
-                  <TextField fullWidth label="WhatsApp" placeholder="(xx) xxxxx-xxxx" />
-                </Grid>
-                <Grid item xs={12}>
-                  <TextField
-                    fullWidth
-                    multiline
-                    minRows={4}
-                    label="Resumo do projeto"
-                    placeholder="Descreva objetivos, público e principais funcionalidades"
-                  />
-                </Grid>
-                <Grid item xs={12}>
-                  <Stack direction={{ xs: "column", sm: "row" }} spacing={2}>
-                    <Button type="submit" variant="contained" endIcon={<ArrowForwardIcon />} component={motion.button} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      Enviar briefing
-                    </Button>
-                    <Button href="#agile-mvp" variant="outlined" component={motion.a} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                      Ver critérios MVP
-                    </Button>
-                  </Stack>
-                </Grid>
-              </Grid>
-            </Grid>
-          </Grid>
-        </Paper>
+            </Box>
+            <Stack direction={{ xs: "column", sm: "row" }} spacing={2} alignItems={{ xs: "stretch", sm: "center" }} sx={{ flexShrink: 0 }}>
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.5,
+                  height: 48,
+                  px: 2.5,
+                  borderRadius: "4px",
+                  border: "1px solid",
+                  borderColor: "divider",
+                  fontWeight: 600,
+                  fontSize: 15,
+                  fontVariantNumeric: "tabular-nums",
+                }}
+              >
+                <WhatsAppIcon sx={{ fontSize: 22, color: "secondary.main" }} />
+                <Typography component="span" fontWeight={600} fontSize={15} fontVariantNumeric="tabular-nums">
+                  {WHATSAPP.number}
+                </Typography>
+              </Box>
+              <Button
+                href={`${WHATSAPP.link}?text=${encodeURIComponent(WHATSAPP.message)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                variant="contained"
+                size="large"
+                endIcon={<ArrowForwardIcon />}
+                component={motion.a}
+                whileHover={{ scale: 1.02, boxShadow: "0 12px 40px -8px rgba(124, 58, 237, 0.5)", transition: { duration: 0.05 } }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => reportConversion()}
+                sx={{ height: 48, px: 3, fontSize: 16, fontWeight: 700, borderRadius: "4px" }}
+              >
+                Falar no WhatsApp
+              </Button>
+            </Stack>
+          </Box>
         </AnimatedSection>
       </Container>
 
