@@ -39,6 +39,7 @@ import IconButton from "@mui/material/IconButton";
 import { useThemeMode, THEME_MODES } from "@/app/providers";
 import { reportConversion } from "@/shared/utils/gtagConversion";
 import logoWhite from "@/shared/assets/logo-white.png";
+import logoBlack from "@/shared/assets/logo-black.png";
 
 const HERO_TITLE_WORDS = "Software sob medida com foco em resultado".split(" ");
 const WHATSAPP = {
@@ -318,7 +319,6 @@ export default function NulloryLanding() {
                 ...(isDark && {
                   filter: "drop-shadow(0 0 4px rgba(0, 179, 255, 0.3)) drop-shadow(0 0 8px rgba(139, 92, 246, 0.2))",
                 }),
-                ...(!isDark && { filter: "brightness(0) opacity(0.85)" }),
                 ...(!reducedMotion && isDark && {
                   animation: "logoNeon 3s ease-in-out infinite",
                 }),
@@ -333,7 +333,7 @@ export default function NulloryLanding() {
               },
             }}
           >
-            <Box component="img" src={logoWhite} alt="Nullory" className="logo-neon" />
+            <Box component="img" src={isDark ? logoWhite : logoBlack} alt="Nullory" className="logo-neon" />
           </Box>
           <IconButton
             onClick={() => setMode(isDark ? THEME_MODES.LIGHT : THEME_MODES.DARK)}
